@@ -26,6 +26,6 @@ public class DeleteQuestionUseCase implements Function<String, Mono<Void>> {
     public Mono<Void> apply(String id) {
         Objects.requireNonNull(id,"Id is required");
         return questionRepository.deleteById(id)
-                .switchIfEmpty(Mono.defer(() -> answerRepository.deleteByQuestionId(id)));
+                .switchIfEmpty(answerRepository.deleteByQuestionId(id));
     }
 }
