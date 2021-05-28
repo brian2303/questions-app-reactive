@@ -6,11 +6,13 @@ import com.sofka.questions.questionsapp.model.QuestionDTO;
 import com.sofka.questions.questionsapp.model.UpdateAnswerDTO;
 import com.sofka.questions.questionsapp.repositories.AnswerRepository;
 import com.sofka.questions.questionsapp.repositories.QuestionRepository;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 import java.util.function.Function;
 
+@Service
 public class UpdateAnswerUseCase implements Function<Mono<UpdateAnswerDTO>, Mono<QuestionDTO>> {
     private final MapperUtils mapperUtils;
     private final AnswerRepository answerRepository;
