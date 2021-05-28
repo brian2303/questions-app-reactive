@@ -28,7 +28,7 @@ class AddAnswerUseCaseTest {
     void answerTest(){
 
         var questionDTO = new QuestionDTO("01","u01","test?","test","test");
-        var answerDTO = new AnswerDTO("01","u01","test");
+        var answerDTO = new AnswerDTO("01","u01","test",0);
         var answer = new Answer();
 
         answer.setId("01");
