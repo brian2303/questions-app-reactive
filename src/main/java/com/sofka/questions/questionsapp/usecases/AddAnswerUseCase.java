@@ -23,7 +23,7 @@ public class AddAnswerUseCase implements AddAnswer {
 
     @Override
     public Mono<QuestionDTO> apply(AnswerDTO answerDTO) {
-        return getUseCase.apply(answerDTO.getQuestionId())
+        return getUseCase.apply(answerDTO.getId())
                 .flatMap(questionDTO -> answerRepository.save(mapperUtils.mapperToAnswer().apply(answerDTO))
                         .map(answer -> {
                             questionDTO.getAnswers().add(mapperUtils.mapEntityToAnswer().apply(answer));

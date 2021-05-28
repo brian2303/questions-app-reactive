@@ -15,7 +15,7 @@ public class MapperUtils {
         return updateAnswer -> {
             var answer = new Answer();
             answer.setPosition(updateAnswer.getPosition());
-            answer.setQuestionId(updateAnswer.getQuestionId());
+            answer.setQuestionId(updateAnswer.getId());
             answer.setUserId(updateAnswer.getUserId());
             answer.setAnswer(updateAnswer.getAnswer());
             return answer;

@@ -12,8 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import reactor.core.publisher.Mono;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class AddAnswerUseCaseTest {
 
@@ -45,7 +43,7 @@ class AddAnswerUseCaseTest {
 
         Assertions.assertEquals(resultQuestionDTO.getId(),questionDTO.getId());
         Assertions.assertEquals(resultQuestionDTO.getQuestion(),questionDTO.getQuestion());
-        Assertions.assertEquals(resultQuestionDTO.getAnswers().get(0).getQuestionId(),answerDTO.getQuestionId());
+        Assertions.assertEquals(resultQuestionDTO.getAnswers().get(0).getId(),answerDTO.getId());
 
     }
 
