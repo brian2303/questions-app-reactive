@@ -8,22 +8,33 @@ public class AnswerDTO {
     @NotBlank
     private String userId;
     @NotBlank
-    private String id;
+    private String questionId;
     @NotBlank
     private String answer;
 
     private Integer position;
+
+    private String id;
 
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(@NotBlank String id, @NotBlank String userId, @NotBlank String answer, Integer position) {
-        this.id = id;
+    public AnswerDTO(String questionId, String userId, String answer, Integer position, String id) {
+        this.questionId = questionId;
         this.userId = userId;
         this.answer = answer;
         this.position = position;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getPosition() {
@@ -43,12 +54,12 @@ public class AnswerDTO {
         this.userId = userId;
     }
 
-    public String getId() {
-        return id;
+    public String getQuestionId() {
+        return questionId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;
     }
 
     public String getAnswer() {
@@ -76,7 +87,7 @@ public class AnswerDTO {
     public String toString() {
         return "AnswerDTO{" +
                 "userId='" + userId + '\'' +
-                ", id='" + id + '\'' +
+                ", id='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 '}';
     }

@@ -28,7 +28,7 @@ class AddAnswerUseCaseTest {
     void answerTest(){
 
         var questionDTO = new QuestionDTO("01","u01","test?","test","test");
-        var answerDTO = new AnswerDTO("01","u01","test",0);
+        var answerDTO = new AnswerDTO("01","u01","test",0,"111");
         var answer = new Answer();
 
         answer.setId("01");
@@ -43,7 +43,7 @@ class AddAnswerUseCaseTest {
 
         Assertions.assertEquals(resultQuestionDTO.getId(),questionDTO.getId());
         Assertions.assertEquals(resultQuestionDTO.getQuestion(),questionDTO.getQuestion());
-        Assertions.assertEquals(resultQuestionDTO.getAnswers().get(0).getId(),answerDTO.getId());
+        Assertions.assertEquals(resultQuestionDTO.getAnswers().get(0).getQuestionId(),answerDTO.getQuestionId());
 
     }
 
