@@ -12,13 +12,23 @@ public class AnswerUser {
     private String action;
     private String userId;
     private LocalDateTime dateAnswer;
+    private Boolean update;
 
-    public AnswerUser(String questionId, String answerId, String action, String userId, LocalDateTime dateAnswer) {
+    public AnswerUser(String questionId, String answerId, String action, String userId, LocalDateTime dateAnswer, Boolean update) {
         this.questionId = questionId;
         this.answerId = answerId;
         this.action = action;
         this.userId = userId;
         this.dateAnswer = dateAnswer;
+        this.update = update;
+    }
+
+    public Boolean getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Boolean update) {
+        this.update = update;
     }
 
     public LocalDateTime getDateAnswer() {

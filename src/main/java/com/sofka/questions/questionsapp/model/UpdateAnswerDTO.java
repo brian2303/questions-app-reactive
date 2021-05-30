@@ -10,16 +10,26 @@ public class UpdateAnswerDTO {
     private String action;
     private String userId;
     private LocalDateTime dateAnswer;
+    private Boolean update;
 
     public UpdateAnswerDTO() {
     }
 
-    public UpdateAnswerDTO(String questionId, String answerId, String action, String userId, LocalDateTime answerUser) {
+    public UpdateAnswerDTO(Boolean update,String questionId, String answerId, String action, String userId, LocalDateTime answerUser) {
         this.questionId = questionId;
         this.answerId = answerId;
         this.action = action;
         this.userId = userId;
         this.dateAnswer = answerUser;
+        this.update=update;
+    }
+
+    public Boolean getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Boolean update) {
+        this.update = update;
     }
 
     public String getQuestionId() {

@@ -65,7 +65,9 @@ public class MapperUtils {
                 dto.getAnswerId(),
                 dto.getAction(),
                 dto.getUserId(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                dto.getUpdate()
+
             );
     }
 
@@ -74,6 +76,7 @@ public class MapperUtils {
         return fluxAnswerUser -> fluxAnswerUser
                 .flatMap(answerUser -> Mono.just(
                         new UpdateAnswerDTO(
+                                answerUser.getUpdate(),
                                 answerUser.getQuestionId(),
                                 answerUser.getAnswerId(),
                                 answerUser.getAction(),

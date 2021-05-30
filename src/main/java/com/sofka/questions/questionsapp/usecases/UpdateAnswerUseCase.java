@@ -32,6 +32,7 @@ public class UpdateAnswerUseCase implements Function<UpdateAnswerDTO, Flux<Updat
         return Mono.just(answerActionDTO)
                 .flatMap(updateAnswer -> answerRepository.findById(updateAnswer.getAnswerId()))
                 .flatMap(answerResponse -> updateAnswer(answerResponse, answerActionDTO.getAction()))
+                .filter(ar-> Boolean.FALSE.equals(answerActionDTO.getUpdate()) )
                 .flatMap(answer -> answerUserRepository.save(mapperUtils.mapDTOToAnswerUser().apply(answerActionDTO)))
                 .flatMapMany(answer -> useCase.apply(new AnswerUserByQuestionDTO(answer.getUserId(),answer.getQuestionId())));
     }
