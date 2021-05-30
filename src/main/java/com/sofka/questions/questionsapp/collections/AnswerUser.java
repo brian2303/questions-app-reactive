@@ -1,9 +1,11 @@
-package com.sofka.questions.questionsapp.model;
+package com.sofka.questions.questionsapp.collections;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-public class UpdateAnswerDTO {
+@Document
+public class AnswerUser {
 
     private String questionId;
     private  String answerId;
@@ -11,15 +13,20 @@ public class UpdateAnswerDTO {
     private String userId;
     private LocalDateTime dateAnswer;
 
-    public UpdateAnswerDTO() {
-    }
-
-    public UpdateAnswerDTO(String questionId, String answerId, String action, String userId, LocalDateTime answerUser) {
+    public AnswerUser(String questionId, String answerId, String action, String userId, LocalDateTime dateAnswer) {
         this.questionId = questionId;
         this.answerId = answerId;
         this.action = action;
         this.userId = userId;
-        this.dateAnswer = answerUser;
+        this.dateAnswer = dateAnswer;
+    }
+
+    public LocalDateTime getDateAnswer() {
+        return dateAnswer;
+    }
+
+    public void setDateAnswer(LocalDateTime dateAnswer) {
+        this.dateAnswer = dateAnswer;
     }
 
     public String getQuestionId() {
@@ -52,13 +59,5 @@ public class UpdateAnswerDTO {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public LocalDateTime getDateAnswer() {
-        return Optional.of(dateAnswer).orElse(LocalDateTime.now());
-    }
-
-    public void setDateAnswer(LocalDateTime dateAnswer) {
-        this.dateAnswer = dateAnswer;
     }
 }

@@ -1,38 +1,39 @@
 package com.sofka.questions.questionsapp.usecases;
 
 import com.sofka.questions.questionsapp.collections.Answer;
-import com.sofka.questions.questionsapp.model.AnswerDTO;
-import com.sofka.questions.questionsapp.model.QuestionDTO;
+import com.sofka.questions.questionsapp.model.AnswerUserByQuestionDTO;
 import com.sofka.questions.questionsapp.model.UpdateAnswerDTO;
 import com.sofka.questions.questionsapp.repositories.AnswerRepository;
-import com.sofka.questions.questionsapp.repositories.QuestionRepository;
+import com.sofka.questions.questionsapp.repositories.AnswerUserRepository;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-public class UpdateAnswerUseCase implements Function<Mono<UpdateAnswerDTO>, Mono<QuestionDTO>> {
+public class UpdateAnswerUseCase implements Function<UpdateAnswerDTO, Flux<UpdateAnswerDTO>> {
     private final MapperUtils mapperUtils;
     private final AnswerRepository answerRepository;
-    private final QuestionRepository questionRepository;
-    private final GetUseCase getUseCase;
+    private final AnswerByUserUseCase useCase;
+    private final AnswerUserRepository answerUserRepository;
 
-    public UpdateAnswerUseCase(MapperUtils mapperUtils, AnswerRepository answerRepository, QuestionRepository questionRepository, GetUseCase getUseCase) {
+
+    public UpdateAnswerUseCase(MapperUtils mapperUtils, AnswerRepository answerRepository, AnswerByUserUseCase useCase, AnswerUserRepository answerUserRepository) {
         this.mapperUtils = mapperUtils;
         this.answerRepository = answerRepository;
-        this.questionRepository = questionRepository;
-        this.getUseCase = getUseCase;
+        this.useCase = useCase;
+        this.answerUserRepository = answerUserRepository;
     }
 
     @Override
-    public Mono<QuestionDTO> apply(Mono<UpdateAnswerDTO> answerActionDTO) {
-        return answerActionDTO.flatMap(updateAnswer -> answerRepository.findById(updateAnswer.getAnswerId())
-                .flatMap(answerResponse -> updateAnswer(answerResponse, updateAnswer.getAction())
-                        .flatMap(answerResp -> getUseCase.apply(updateAnswer.getQuestionId()))
-                )
-        );
+    public Flux<UpdateAnswerDTO> apply(UpdateAnswerDTO answerActionDTO) {
+        return Mono.just(answerActionDTO)
+                .flatMap(updateAnswer -> answerRepository.findById(updateAnswer.getAnswerId()))
+                .flatMap(answerResponse -> updateAnswer(answerResponse, answerActionDTO.getAction()))
+                .flatMap(answer -> answerUserRepository.save(mapperUtils.mapDTOToAnswerUser().apply(answerActionDTO)))
+                .flatMapMany(answer -> useCase.apply(new AnswerUserByQuestionDTO(answer.getUserId(),answer.getQuestionId())));
     }
 
     public Mono<Answer> updateAnswer(Answer answer, String action) {
